@@ -47,7 +47,7 @@ v2f vert(data i){
     v2f o;
 
     o.position = mul(UNITY_MATRIX_MVP, i.vertex);
-	o.screenPos.xy = (float2(o.position.x, -o.position.y) + o.position.w) / 2;
+	o.screenPos.xy = (float2(o.position.x, o.position.y) + o.position.w) / 2;
 	o.screenPos.zw = o.position.zw;
     
 
@@ -129,13 +129,14 @@ struct v2f {
 
 v2f vert(data i){
 
-    v2f o;
+	v2f o;
 
-    o.position = mul(UNITY_MATRIX_MVP, i.vertex);
+	o.position = mul(UNITY_MATRIX_MVP, i.vertex);
+	o.screenPos.xy = (float2(o.position.x, o.position.y) + o.position.w) / 2;
+	o.screenPos.zw = o.position.zw;
 
-    o.screenPos = o.position;
 
-    return o;
+	return o;
 
 }
 
@@ -148,9 +149,9 @@ half4 frag( v2f i ) : COLOR
     float2 screenPos = i.screenPos.xy / i.screenPos.w;
 	float depth= _blurSizeXY*0.0005;
 
-    screenPos.x = (screenPos.x + 1) * 0.5;
+    //screenPos.x = ((screenPos.x + 1) * 0.5);
 
-    screenPos.y = 1-(screenPos.y + 1) * 0.5;
+    //screenPos.y = (1-(screenPos.y + 1) * 0.5);
     
     half4 sum = half4(0.0h,0.0h,0.0h,0.0h);
   
